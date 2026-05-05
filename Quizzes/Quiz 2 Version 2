@@ -1,0 +1,186 @@
+#Part 1 
+ 
+#1.Persons 1 and 3 are the same! 
+ 
+#2. code isnt correct. invalid quotes, calls Person.getName() even though getName() is not static. 
+#Also code calls methods on variables that were set to null for person3 when set equal to 
+#person1 then person1 set to null. 
+ 
+#3. The name of the person is: Ashley 
+#The name of the other person is: John 
+ 
+#Part 2 
+public class Cylinder { 
+    private double radius; 
+    private double height; 
+    private final double PI = 3.14; 
+ 
+    public Cylinder(double radius, double height) { 
+        this.radius = radius; 
+        this.height = height; 
+    } 
+ 
+    public void setRadius(double radius) { 
+        this.radius = radius; 
+    } 
+ 
+    public void setHeight(double height) { 
+        this.height = height; 
+    } 
+ 
+    public double getRadius() { 
+        return radius; 
+    } 
+ 
+    public double getHeight() { 
+        return height; 
+    } 
+ 
+    public double getVolume() { 
+        return radius * radius * height * PI; 
+    } 
+ 
+    public String toString() { 
+        return "Cylinder radius: " + radius + ", height: " + height; 
+    } 
+} 
+ 
+import java.util.Scanner; 
+ 
+public class MainProgram { 
+    public static void main(String[] args) { 
+        Scanner scan = new Scanner(System.in); 
+        char tryAgain = 'y'; 
+ 
+        while (tryAgain == 'y' || tryAgain == 'Y') { 
+            System.out.println("Please enter radius for a cylinder"); 
+            double radius = scan.nextDouble(); 
+ 
+            System.out.println("Please enter height for a cylinder"); 
+            double height = scan.nextDouble(); 
+ 
+            Cylinder c = new Cylinder(radius, height); 
+ 
+            System.out.println("The volume of the cylinder is: " + c.getVolume()); 
+ 
+            System.out.println("Try again? (y/n)"); 
+            tryAgain = scan.next().charAt(0); 
+        } 
+    } 
+} 
+ 
+ 
+ 
+#Part 3 
+public class WaterFilterPitcher { 
+    private String make; 
+    private String color; 
+    private double totalCapacity; 
+    private double curWaterAmount; 
+    private int filterLife; 
+    private int curFilterUsage; 
+    private final double LitersPerFilterLifeUnit = 5.0; 
+ 
+    public WaterFilterPitcher(String make, String color, double totalCapacity, int filterLife) { 
+        this.make = make; 
+        this.color = color; 
+        this.totalCapacity = totalCapacity; 
+        this.filterLife = filterLife; 
+        this.curWaterAmount = 0; 
+        this.curFilterUsage = 0; 
+    } 
+ 
+    public boolean fill(double liters) { 
+        if (curWaterAmount + liters > totalCapacity) { 
+            return false; 
+        } 
+        curWaterAmount += liters; 
+        curFilterUsage += (int)(liters / LitersPerFilterLifeUnit); 
+        return true; 
+    } 
+ 
+    public boolean pour(double liters) { 
+        if (liters > curWaterAmount) { 
+            return false; 
+        } 
+        curWaterAmount -= liters; 
+        return true; 
+    } 
+ 
+    public void empty() { 
+        curWaterAmount = 0; 
+    } 
+ 
+    public boolean checkFilter() { 
+        return curFilterUsage < filterLife; 
+    } 
+ 
+    public String toString() { 
+        return "Make: " + make + ", Color: " + color + ", Capacity: " + totalCapacity + 
+               ", Current Water: " + curWaterAmount + ", Filter Life: " + filterLife + 
+               ", Used: " + curFilterUsage; 
+    } 
+} 
+ 
+ 
+import java.util.Scanner; 
+ 
+public class WaterPitcherApp { 
+    public static void main(String[] args) { 
+        Scanner scan = new Scanner(System.in); 
+ 
+        System.out.println("Enter make:"); 
+        String make = scan.nextLine(); 
+ 
+        System.out.println("Enter color:"); 
+        String color = scan.nextLine(); 
+ 
+        System.out.println("Enter max capacity:"); 
+        double capacity = scan.nextDouble(); 
+ 
+        System.out.println("Enter filter life:"); 
+        int filterLife = scan.nextInt(); 
+ 
+        WaterFilterPitcher pitcher = new WaterFilterPitcher(make, color, capacity, filterLife); 
+ 
+        int choice = 0; 
+ 
+        while (choice != 5) { 
+            System.out.println("\n1) Fill"); 
+            System.out.println("2) Pour"); 
+            System.out.println("3) Empty"); 
+            System.out.println("4) Check Filter"); 
+            System.out.println("5) Quit"); 
+            choice = scan.nextInt(); 
+ 
+            if (choice == 1) { 
+                System.out.println("Liters to fill:"); 
+                double liters = scan.nextDouble(); 
+                if (!pitcher.fill(liters)) { 
+                    System.out.println("Overflow!"); 
+                } 
+            } 
+ 
+            else if (choice == 2) { 
+                System.out.println("Liters to pour:"); 
+                double liters = scan.nextDouble(); 
+                if (!pitcher.pour(liters)) { 
+                    System.out.println("Not enough water!"); 
+                } 
+            } 
+ 
+            else if (choice == 3) { 
+                pitcher.empty(); 
+            } 
+ 
+            else if (choice == 4) { 
+                if (pitcher.checkFilter()) { 
+                    System.out.println("Filter OK"); 
+                } else { 
+                    System.out.println("Filter needs replacement"); 
+                } 
+            } 
+        } 
+    } 
+} 
+ 
