@@ -1,17 +1,3 @@
-﻿public class HtmlRenderer {
-    public static void main(String[] args) {
-        System.out.println("""
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<head></head>
-<body>
-
-<table CELLSPACING="0" CELLPADDING="5" WIDTH="100%" BGCOLOR="#606060">
-<tr><td><center>
-<font face="Arial, Helvetica" color="#000000">
-LoginApp.java</font>
-</center></td></tr></table>
-<pre>
 import java.util.Scanner;
 
 public class LoginApp {
@@ -52,12 +38,5 @@ public class LoginApp {
                     break;
             }
         }
-    }
-}
-</pre>
-
-</body>
-</html>
-""");
     }
 }
